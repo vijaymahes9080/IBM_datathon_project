@@ -197,8 +197,9 @@ def assemble_master(s1, s2, s3, s4):
         "-filter_complex", filt,
         "-map", "[vout]",
         "-map", "[acat]",
-        "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "192k",
+        "-c:v", "libx264", "-preset", "medium", "-crf", "22", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-b:a", "128k",
+        "-movflags", "+faststart",
         final_mp4
     ]
     subprocess.run(cmd, check=True)
