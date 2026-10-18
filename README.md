@@ -4,13 +4,38 @@ Security gateway and deterministic policy perimeter for enterprise AI workloads 
 
 ---
 
-### 🎥 Demonstration Video (160s, 1080p Full HD)
-- **Video File**: [`secureagent_ai_demo.mp4`](secureagent_ai_demo.mp4) (also in [`demo_video/secureagent_ai_realistic_demo.mp4`](demo_video/secureagent_ai_realistic_demo.mp4))
-- **Video Documentation**: [`demo_video/README.md`](demo_video/README.md) | [Storyboard](demo_video/storyboard.md) | [Narration Script](demo_video/narration_script.md)
-- **Live Public Tunnel**: [https://dirty-ravens-fall.loca.lt](https://dirty-ravens-fall.loca.lt) (Password/IP: `157.50.3.136`)
-- **Format**: MP4 (H.264 / AAC, 1920x1080 @ 30 fps), **160.2 seconds** ($\le 180$ seconds)
-- **Real Demonstration**: Full live browser capture of active application with natural cursor movement, real live prompt execution, role-based authorization blocks, human approval workflow, 16 live security benchmarks, and cryptographic SHA-256 hash chain verification.
+## 🎥 Demonstration Video (160s, 1080p Full HD)
 
+<p align="center">
+  <a href="https://github.com/vijaymahes9080/IBM_datathon_project/blob/main/secureagent_ai_demo.mp4" title="Click to Watch Demonstration Video on GitHub">
+    <img src="thumbnail_play.png" alt="SecureAgent AI Video Demonstration - Click to Play" width="100%" style="border-radius: 10px; border: 1px solid #1e293b;" />
+  </a>
+</p>
+
+<p align="center">
+  ▶ <strong><a href="https://github.com/vijaymahes9080/IBM_datathon_project/blob/main/secureagent_ai_demo.mp4">CLICK HERE TO PLAY VIDEO DIRECTLY ON GITHUB</a></strong><br>
+  <sub>1080p 30fps Full HD • 160.2 Seconds (&le; 180s) • Clear English Voiceover • Burned Subtitles • True Live Browser Capture</sub>
+</p>
+
+<details>
+<summary><strong>▶ In-Browser HTML5 Player (Click to expand / play in place)</strong></summary>
+
+<br>
+
+<p align="center">
+  <video width="100%" controls poster="thumbnail_play.png">
+    <source src="https://github.com/vijaymahes9080/IBM_datathon_project/raw/main/secureagent_ai_demo.mp4" type="video/mp4">
+    <source src="./secureagent_ai_demo.mp4" type="video/mp4">
+    Your browser does not support the video tag. Please <a href="https://github.com/vijaymahes9080/IBM_datathon_project/blob/main/secureagent_ai_demo.mp4">click here to watch directly on GitHub</a>.
+  </video>
+</p>
+
+</details>
+
+- **Repository Video File**: [`secureagent_ai_demo.mp4`](secureagent_ai_demo.mp4) (also in [`demo_video/secureagent_ai_realistic_demo.mp4`](demo_video/secureagent_ai_realistic_demo.mp4))
+- **Live Public Tunnel**: [https://dirty-ravens-fall.loca.lt](https://dirty-ravens-fall.loca.lt) (Tunnel Password/IP: `157.50.3.136`)
+- **Production Documentation**: [`demo_video/README.md`](demo_video/README.md) | [Storyboard](demo_video/storyboard.md) | [Narration Transcript](demo_video/narration_script.md)
+- **Authentic Engineering Screencast**: Continuous live browser recording with natural mouse movements across Overview, AI Workspace PII masking/prompt injection defenses, RBAC viewer denial, human-in-the-loop approvals, 16 live automated test runs, and SHA-256 cryptographic audit hash-chain verification.
 
 ---
 

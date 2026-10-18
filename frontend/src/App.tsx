@@ -10,7 +10,9 @@ import {
   FlaskConical,
   Settings,
   Cpu,
-  UserCheck
+  UserCheck,
+  Play,
+  X
 } from 'lucide-react';
 
 import { OverviewView } from './components/OverviewView';
@@ -26,6 +28,7 @@ import { SettingsView } from './components/SettingsView';
 export function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [currentRole, setCurrentRole] = useState('analyst');
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   const navItems = [
     { id: 'overview', label: 'Overview', icon: <LayoutDashboard size={16} /> },
@@ -99,6 +102,24 @@ export function App() {
           </div>
 
           <div className="header-actions">
+            {/* Watch Demo Video Button */}
+            <button
+              className="btn btn-primary btn-sm"
+              style={{
+                background: 'linear-gradient(135deg, #0284c7, #2563eb)',
+                borderColor: '#38bdf8',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                fontWeight: 600
+              }}
+              onClick={() => setShowVideoModal(true)}
+              title="Watch full 1080p demonstration video (160s)"
+            >
+              <Play size={13} fill="currentColor" />
+              <span>Watch Demo (160s)</span>
+            </button>
+
             {/* Persona Switcher */}
             <div className="role-selector-wrap">
               <UserCheck size={14} color="#60a5fa" />
@@ -138,8 +159,86 @@ export function App() {
           {activeTab === 'settings' && <SettingsView currentRole={currentRole} />}
         </main>
       </div>
+
+      {/* Video Modal Player */}
+      {showVideoModal && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(8px)',
+            zIndex: 99999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.5rem'
+          }}
+          onClick={() => setShowVideoModal(false)}
+        >
+          <div
+            style={{
+              background: '#0b1118',
+              border: '1px solid #1e293b',
+              borderRadius: '12px',
+              maxWidth: '1100px',
+              width: '100%',
+              overflow: 'hidden',
+              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8)'
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '0.85rem 1.25rem',
+                borderBottom: '1px solid #1e293b',
+                background: '#090e15'
+              }}
+            >
+              <div>
+                <strong style={{ color: '#f8fafc', fontSize: '0.95rem' }}>
+                  SecureAgent AI — Product Demonstration
+                </strong>
+                <span style={{ color: '#94a3b8', fontSize: '0.75rem', marginLeft: '0.65rem' }}>
+                  IBM Z Datathon 2026 • 160s • 1080p Full HD
+                </span>
+              </div>
+              <button
+                className="btn btn-secondary btn-sm"
+                onClick={() => setShowVideoModal(false)}
+                style={{ padding: '0.3rem 0.5rem' }}
+              >
+                <X size={15} /> Close
+              </button>
+            </div>
+
+            <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%', background: '#000' }}>
+              <video
+                controls
+                autoPlay
+                playsInline
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%'
+                }}
+              >
+                <source src="/secureagent_ai_demo.mp4" type="video/mp4" />
+                <source src="./secureagent_ai_demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default App;
+

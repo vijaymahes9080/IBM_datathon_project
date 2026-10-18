@@ -37,6 +37,7 @@ pnpm-debug.log*
 lerna-debug.log*
 frontend/dist/
 frontend/dist-ssr/
+frontend/public/*.mp4
 *.local
 
 # Editor & OS
