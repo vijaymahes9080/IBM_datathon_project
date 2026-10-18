@@ -55,3 +55,8 @@ Thumbs.db
 *.key
 *.p12
 *.crt
+
+# Demo Video Render Cache
+demo_video/clips/
+demo_video/audio/*.wav
+
