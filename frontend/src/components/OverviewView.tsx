@@ -24,108 +24,108 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate }) => {
   }, []);
 
   if (loading) {
-    return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Loading security operations posture...</div>;
+    return <div style={{ padding: '1.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>Loading system posture...</div>;
   }
 
   const isLocal = metrics?.ibm_z_posture.execution_mode === 'LOCAL_EMULATION';
 
   return (
     <div>
-      {/* Top Metrics Cards */}
+      {/* Metrics Row */}
       <div className="metrics-grid">
         <div className="metric-card">
           <div>
-            <div className="metric-title">Audit Ledger Entries</div>
+            <div className="metric-title">Audit Log Entries</div>
             <div className="metric-val">{metrics?.total_audit_events ?? 0}</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--status-success)', marginTop: '0.25rem' }}>
-              SHA-256 Hash Chained
+            <div style={{ fontSize: '0.72rem', color: 'var(--status-pass)', marginTop: '0.2rem', fontFamily: 'var(--font-mono)' }}>
+              SHA-256 chained
             </div>
           </div>
-          <div className="metric-icon-wrap" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#10b981' }}>
-            <FileText size={20} />
+          <div className="metric-icon-wrap" style={{ background: 'var(--status-pass-bg)', color: 'var(--status-pass)' }}>
+            <FileText size={18} />
           </div>
         </div>
 
         <div className="metric-card">
           <div>
-            <div className="metric-title">Blocked Adversarial Events</div>
-            <div className="metric-val" style={{ color: '#f87171' }}>{metrics?.blocked_security_events ?? 0}</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-              Outer Gateway Defense
+            <div className="metric-title">Blocked Injections</div>
+            <div className="metric-val" style={{ color: 'var(--status-fail)' }}>{metrics?.blocked_security_events ?? 0}</div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
+              Policy perimeter stops
             </div>
           </div>
-          <div className="metric-icon-wrap" style={{ background: 'rgba(239, 68, 68, 0.12)', color: '#ef4444' }}>
-            <ShieldAlert size={20} />
+          <div className="metric-icon-wrap" style={{ background: 'var(--status-fail-bg)', color: 'var(--status-fail)' }}>
+            <ShieldAlert size={18} />
           </div>
         </div>
 
         <div className="metric-card">
           <div>
-            <div className="metric-title">Pending Human Approvals</div>
-            <div className="metric-val" style={{ color: '#fbbf24' }}>{metrics?.pending_human_approvals ?? 0}</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-              HITL High-Risk Gating
+            <div className="metric-title">Pending Approvals</div>
+            <div className="metric-val" style={{ color: 'var(--status-warn)' }}>{metrics?.pending_human_approvals ?? 0}</div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
+              Restricted data actions
             </div>
           </div>
-          <div className="metric-icon-wrap" style={{ background: 'rgba(245, 158, 11, 0.12)', color: '#f59e0b' }}>
-            <Activity size={20} />
+          <div className="metric-icon-wrap" style={{ background: 'var(--status-warn-bg)', color: 'var(--status-warn)' }}>
+            <Activity size={18} />
           </div>
         </div>
 
         <div className="metric-card">
           <div>
-            <div className="metric-title">Active Security Policies</div>
+            <div className="metric-title">Active Rules</div>
             <div className="metric-val">{metrics?.active_policies_count ?? 4}</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--accent-cyan)', marginTop: '0.25rem' }}>
-              Deterministic Outside-LLM
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
+              RBAC and sensitivity gates
             </div>
           </div>
-          <div className="metric-icon-wrap" style={{ background: 'rgba(15, 98, 254, 0.15)', color: '#60a5fa' }}>
-            <Shield size={20} />
+          <div className="metric-icon-wrap" style={{ background: 'var(--accent-dim)', color: '#60a5fa' }}>
+            <Shield size={18} />
           </div>
         </div>
       </div>
 
-      {/* Main Grid: Architecture Status & Recent Audit Activity */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
+      {/* Main Grid: Architecture Status & Core Guardrails */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
         
-        {/* Platform Adapter Card */}
+        {/* IBM Z Platform Adapter */}
         <div className="card">
           <div className="card-header">
             <div>
               <div className="card-title">
-                <Cpu size={18} color="#8b5cf6" />
-                IBM Z & LinuxONE Architecture Adapter
+                <Cpu size={16} color="#a855f7" />
+                IBM Z Adapter Posture
               </div>
-              <div className="card-desc">Hardware security integration & confidential computing readiness</div>
+              <div className="card-desc">Hardware security status and deployment target</div>
             </div>
             <span className={`badge ${isLocal ? 'badge-purple' : 'badge-success'}`}>
               {metrics?.ibm_z_posture.execution_mode}
             </span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginTop: '0.5rem' }}>
-            <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Host Architecture</div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '0.2rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ background: 'var(--bg-input)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 600 }}>Host Platform</div>
+              <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-main)', marginTop: '0.15rem' }}>
                 {metrics?.ibm_z_posture.architecture} ({metrics?.ibm_z_posture.operating_system})
               </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
                 {metrics?.ibm_z_posture.notes}
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-              <div style={{ background: 'var(--bg-input)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>CPACF Crypto Acceleration</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: isLocal ? '#c4b5fd' : '#34d399', marginTop: '0.2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
+              <div style={{ background: 'var(--bg-input)', padding: '0.65rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', fontWeight: 600, textTransform: 'uppercase' }}>CPACF Crypto</div>
+                <div style={{ fontSize: '0.78rem', fontWeight: 600, color: isLocal ? '#c4b5fd' : '#34d399', marginTop: '0.15rem' }}>
                   {metrics?.ibm_z_posture.cpacf_hardware_crypto.status}
                 </div>
               </div>
 
-              <div style={{ background: 'var(--bg-input)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Secure Execution Enclave</div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: isLocal ? '#c4b5fd' : '#34d399', marginTop: '0.2rem' }}>
+              <div style={{ background: 'var(--bg-input)', padding: '0.65rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', fontWeight: 600, textTransform: 'uppercase' }}>Secure Execution</div>
+                <div style={{ fontSize: '0.78rem', fontWeight: 600, color: isLocal ? '#c4b5fd' : '#34d399', marginTop: '0.15rem' }}>
                   {metrics?.ibm_z_posture.secure_execution_enclave.status}
                 </div>
               </div>
@@ -133,57 +133,53 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate }) => {
 
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
               <button className="btn btn-secondary btn-sm" onClick={() => onNavigate('settings')}>
-                Inspect Hardware Config <ArrowRight size={14} />
+                Deployment Details <ArrowRight size={13} />
               </button>
               <button className="btn btn-primary btn-sm" onClick={() => onNavigate('evaluation')}>
-                Run Evaluation Suite <ArrowRight size={14} />
+                Run Benchmark Suite <ArrowRight size={13} />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Security Core Value Proposition */}
+        {/* Security Guardrails */}
         <div className="card">
           <div className="card-header">
             <div>
               <div className="card-title">
-                <Shield size={18} color="#0f62fe" />
-                Deterministic Outer Security Perimeter
+                <Shield size={16} color="#3b82f6" />
+                Active Security Guardrails
               </div>
-              <div className="card-desc">Zero Trust AI Architecture — Never Trust LLM Output as Authorization</div>
+              <div className="card-desc">Deterministic enforcement independent of language model output</div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-              <CheckCircle2 size={16} color="#10b981" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.8rem' }}>
+            <div style={{ display: 'flex', gap: '0.65rem', alignItems: 'flex-start' }}>
+              <CheckCircle2 size={15} color="#10b981" style={{ marginTop: '0.15rem', flexShrink: 0 }} />
               <div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>Presidio PII Redaction Before Model Dispatch</div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>All identifiers (SSN, cards, keys, RACF IDs) are masked before leaving outer gateway perimeter.</div>
+                <strong style={{ color: 'var(--text-main)' }}>Presidio Ingress Redaction:</strong> Sensitive identifiers (SSNs, card numbers, RACF IDs, emails) are scrubbed before prompt data reaches any reasoning adapter.
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-              <CheckCircle2 size={16} color="#10b981" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
+            <div style={{ display: 'flex', gap: '0.65rem', alignItems: 'flex-start' }}>
+              <CheckCircle2 size={15} color="#10b981" style={{ marginTop: '0.15rem', flexShrink: 0 }} />
               <div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>Fail-Closed Policy Enforcement</div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Policy decisions are evaluated in deterministic Python outside the model; high threat scores halt execution immediately.</div>
+                <strong style={{ color: 'var(--text-main)' }}>Fail-Closed Policy Engine:</strong> Authorizations are evaluated in Python code outside the model. Requests with high threat scores or missing permissions fail immediately.
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-              <CheckCircle2 size={16} color="#10b981" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
+            <div style={{ display: 'flex', gap: '0.65rem', alignItems: 'flex-start' }}>
+              <CheckCircle2 size={15} color="#10b981" style={{ marginTop: '0.15rem', flexShrink: 0 }} />
               <div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>Cryptographic SHA-256 Chained Audit Trail</div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Every decision, prompt classification, and tool invocation is recorded into a mathematically verifiable tamper-evident hash chain.</div>
+                <strong style={{ color: 'var(--text-main)' }}>Cryptographic Audit Ledger:</strong> Every decision and tool call is appended to an unbroken SHA-256 hash chain with live integrity validation.
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-              <CheckCircle2 size={16} color="#10b981" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
+            <div style={{ display: 'flex', gap: '0.65rem', alignItems: 'flex-start' }}>
+              <CheckCircle2 size={15} color="#10b981" style={{ marginTop: '0.15rem', flexShrink: 0 }} />
               <div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>Mandatory Human-In-The-Loop Approval</div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Restricted exports and high-risk actions are suspended until authorized by an administrator.</div>
+                <strong style={{ color: 'var(--text-main)' }}>Restricted Action Gating:</strong> Operations on restricted records cannot execute directly. They require an explicit approval ticket from a security administrator.
               </div>
             </div>
           </div>
@@ -191,18 +187,18 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate }) => {
 
       </div>
 
-      {/* Recent Activity Table */}
+      {/* Activity Table */}
       <div className="card">
         <div className="card-header">
           <div>
             <div className="card-title">
-              <Activity size={18} color="#00b4d8" />
-              Recent Gateway Activity Feed
+              <Activity size={16} color="#38bdf8" />
+              Recent Gateway Activity
             </div>
-            <div className="card-desc">Real-time decisions logged to hash-chained tamper-evident store</div>
+            <div className="card-desc">Live decisions recorded in the local cryptographic ledger</div>
           </div>
           <button className="btn btn-secondary btn-sm" onClick={() => onNavigate('audit')}>
-            View Full Audit Trail <ArrowRight size={14} />
+            View Full Audit Log <ArrowRight size={13} />
           </button>
         </div>
 
@@ -211,19 +207,19 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate }) => {
             <thead>
               <tr>
                 <th>Request ID</th>
-                <th>Timestamp</th>
+                <th>Time</th>
                 <th>Actor</th>
                 <th>Action</th>
-                <th>Risk Level</th>
+                <th>Risk</th>
                 <th>Policy Outcome</th>
-                <th>Hash Digest</th>
+                <th>Chained Hash</th>
               </tr>
             </thead>
             <tbody>
               {metrics?.recent_activity.map(row => (
                 <tr key={row.id}>
                   <td style={{ fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>{row.request_id}</td>
-                  <td style={{ fontSize: '0.78rem' }}>{new Date(row.timestamp).toLocaleTimeString()}</td>
+                  <td style={{ fontSize: '0.74rem' }}>{new Date(row.timestamp).toLocaleTimeString()}</td>
                   <td>{row.actor}</td>
                   <td style={{ fontFamily: 'var(--font-mono)' }}>{row.action}</td>
                   <td>
@@ -236,7 +232,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({ onNavigate }) => {
                       {row.policy_outcome}
                     </span>
                   </td>
-                  <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                  <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-dim)' }}>
                     {row.entry_hash}
                   </td>
                 </tr>

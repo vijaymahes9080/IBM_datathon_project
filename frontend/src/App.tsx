@@ -28,23 +28,23 @@ export function App() {
   const [currentRole, setCurrentRole] = useState('analyst');
 
   const navItems = [
-    { id: 'overview', label: 'Overview', icon: <LayoutDashboard size={18} /> },
-    { id: 'workspace', label: 'Secure AI Workspace', icon: <Shield size={18} /> },
-    { id: 'data_protection', label: 'Data Protection & PII', icon: <ShieldCheck size={18} /> },
-    { id: 'threat_detection', label: 'Threat Defense Engine', icon: <ShieldAlert size={18} /> },
-    { id: 'policy', label: 'Policy & Approvals', icon: <Sliders size={18} /> },
-    { id: 'traces', label: 'Agent Activity & Traces', icon: <Activity size={18} /> },
-    { id: 'audit', label: 'Tamper-Evident Audit', icon: <FileText size={18} /> },
-    { id: 'evaluation', label: 'Evaluation Lab', icon: <FlaskConical size={18} /> },
-    { id: 'settings', label: 'IBM Z Deployment', icon: <Settings size={18} /> },
+    { id: 'overview', label: 'Overview', icon: <LayoutDashboard size={16} /> },
+    { id: 'workspace', label: 'AI Workspace', icon: <Shield size={16} /> },
+    { id: 'data_protection', label: 'Data Protection', icon: <ShieldCheck size={16} /> },
+    { id: 'threat_detection', label: 'Threat Detection', icon: <ShieldAlert size={16} /> },
+    { id: 'policy', label: 'Policy Management', icon: <Sliders size={16} /> },
+    { id: 'traces', label: 'Pipeline Traces', icon: <Activity size={16} /> },
+    { id: 'audit', label: 'Audit Log', icon: <FileText size={16} /> },
+    { id: 'evaluation', label: 'Evaluation Suite', icon: <FlaskConical size={16} /> },
+    { id: 'settings', label: 'Platform & IBM Z', icon: <Settings size={16} /> },
   ];
 
   const getPersonaName = (role: string) => {
     switch (role) {
-      case 'viewer': return 'viewer_guest (Public Read-Only)';
-      case 'admin': return 'admin_secops (Full Security Officer)';
+      case 'viewer': return 'viewer_guest (Read-Only)';
+      case 'admin': return 'admin_secops (Full Admin)';
       case 'analyst':
-      default: return 'analyst_alice (Standard Risk Operations)';
+      default: return 'analyst_alice (Operations)';
     }
   };
 
@@ -59,11 +59,11 @@ export function App() {
       <aside className="sidebar">
         <div className="brand-section">
           <div className="brand-logo">
-            <Cpu size={22} />
+            <Cpu size={18} />
           </div>
           <div>
             <div className="brand-title">SecureAgent AI</div>
-            <div className="brand-sub">IBM Z Datathon 2026</div>
+            <div className="brand-sub">IBM Z Security Gateway</div>
           </div>
         </div>
 
@@ -82,46 +82,45 @@ export function App() {
 
         <div className="sidebar-footer">
           <div className="platform-badge">
-            <Cpu size={14} />
-            <span>IBM Z / LinuxONE Adapter</span>
+            <span>Adapter:</span>
+            <span style={{ color: '#93c5fd' }}>s390x / Local</span>
           </div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-            Zero Trust AI Perimeter v1.0.0
+          <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textAlign: 'center', fontFamily: 'var(--font-mono)' }}>
+            v1.0.0
           </div>
         </div>
       </aside>
 
-      {/* Main Execution Wrapper */}
+      {/* Main Execution Shell */}
       <div className="main-wrapper">
-        {/* Top Header */}
         <header className="top-header">
           <div className="header-title-area">
             <h1 className="view-heading">{getHeading()}</h1>
           </div>
 
           <div className="header-actions">
-            {/* Live Role Switcher */}
+            {/* Persona Switcher */}
             <div className="role-selector-wrap">
-              <UserCheck size={16} color="#60a5fa" />
-              <span className="role-label">Persona:</span>
+              <UserCheck size={14} color="#60a5fa" />
+              <span className="role-label">Role:</span>
               <select
                 className="role-select"
                 value={currentRole}
                 onChange={e => setCurrentRole(e.target.value)}
-                title="Switch active persona to test server-side RBAC and authorization barriers"
+                title="Switch role to test server-side authorization"
               >
-                <option value="viewer">Viewer (Least Privilege)</option>
-                <option value="analyst">Analyst (Internal Operations)</option>
-                <option value="admin">Administrator (Security Officer)</option>
+                <option value="viewer">Viewer</option>
+                <option value="analyst">Analyst</option>
+                <option value="admin">Admin</option>
               </select>
-              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginLeft: '0.25rem' }}>
-                ({getPersonaName(currentRole)})
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
+                {getPersonaName(currentRole)}
               </span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
-              <span>Gateway Online</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+              <span>Gateway active</span>
             </div>
           </div>
         </header>

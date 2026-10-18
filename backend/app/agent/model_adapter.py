@@ -129,45 +129,37 @@ class ModelAdapterService:
             if tool_name == "calculate_secure_metric":
                 res = output.get("result") if isinstance(output, dict) else output
                 expr = output.get("expression") if isinstance(output, dict) else ""
-                return f"I evaluated the mathematical expression '{expr}'. The verified result is {res}."
+                return f"Result: {res} (evaluated via secure AST arithmetic: {expr})."
             elif tool_name == "analyze_text_statistics":
                 return (
-                    f"Text Analysis Complete:\n"
-                    f"• Word count: {output.get('word_count')}\n"
-                    f"• Character count: {output.get('character_count')}\n"
-                    f"• Estimated token count: {output.get('estimated_tokens')}\n"
-                    f"• Lexical diversity score: {output.get('lexical_diversity')}"
+                    f"Text metrics:\n"
+                    f"· Words: {output.get('word_count')}\n"
+                    f"· Characters: {output.get('character_count')}\n"
+                    f"· Tokens (approx): {output.get('estimated_tokens')}\n"
+                    f"· Lexical diversity: {output.get('lexical_diversity')}"
                 )
             elif tool_name == "lookup_synthetic_record":
                 rec = output
                 return (
-                    f"Enterprise Record Retrieved:\n"
-                    f"• ID: {rec.get('id')}\n"
-                    f"• Customer: {rec.get('customer_name')}\n"
-                    f"• Account: {rec.get('account_number')}\n"
-                    f"• Classification: {rec.get('classification')}\n"
-                    f"• SSN: {rec.get('ssn_masked')}\n"
-                    f"• Balance: ${rec.get('balance'):,.2f}\n"
-                    f"• Department: {rec.get('department')}\n"
-                    f"• Notes: {rec.get('notes')}"
+                    f"Customer record {rec.get('id')} ({rec.get('classification')}):\n"
+                    f"· Name: {rec.get('customer_name')}\n"
+                    f"· Account: {rec.get('account_number')}\n"
+                    f"· SSN: {rec.get('ssn_masked')}\n"
+                    f"· Balance: ${rec.get('balance'):,.2f}\n"
+                    f"· Department: {rec.get('department')}\n"
+                    f"· Notes: {rec.get('notes')}"
                 )
             elif tool_name == "export_restricted_records":
-                return (
-                    f"Restricted Export Successful:\n"
-                    f"Record {output.get('record', {}).get('id')} has been exported under authorized human approval token {output.get('export_token')}."
-                )
+                return f"Export complete for {output.get('record', {}).get('id')} under verified approval token {output.get('export_token')}."
 
         if "balance" in p_lower or "account" in p_lower:
-            return "To view account details or balances, request a synthetic record lookup (e.g., 'Lookup record REC-1001'). Your role permissions will determine what fields are visible."
+            return "Specify a record identifier (such as REC-1001) to look up account details. Field visibility depends on your current role."
         if "calculate" in p_lower or "+" in p_lower or "*" in p_lower:
-            return "I can execute secure mathematical calculations through the allowlisted calculation tool. Please specify the arithmetic expression."
+            return "Provide a valid mathematical expression for the AST calculator."
         if "policy" in p_lower or "rule" in p_lower:
-            return "Enterprise security policies enforce strict role-based access control, automated Presidio PII redaction, threat heuristics, and tamper-evident audit logging."
+            return "Current policies enforce role-based access control on records, automated PII scrubbing, threat scoring, and hash-chained audit logging."
 
-        return (
-            f"Your request was received and processed through the SecureAgent AI gateway. "
-            f"All sensitive identifiers were masked prior to reasoning, and actions complied with enterprise policy."
-        )
+        return "Request processed through the gateway. Sensitive identifiers were scrubbed and policy checks passed."
 
 # Global Instance
 model_adapter = ModelAdapterService()

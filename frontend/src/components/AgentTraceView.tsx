@@ -73,10 +73,10 @@ export const AgentTraceView: React.FC = () => {
         <div className="card-header" style={{ marginBottom: '1rem' }}>
           <div>
             <div className="card-title">
-              <Layers size={18} color="#0f62fe" />
-              Secure Multi-Agent Pipeline Architecture
+              <Layers size={18} color="#3b82f6" />
+              Multi-Agent Execution Pipeline
             </div>
-            <div className="card-desc">Every request traverses discrete, bounded agent stages with explicit inputs, outputs, and permissions:</div>
+            <div className="card-desc">Every request traverses bounded stages with explicit inputs, outputs, and authorization checks:</div>
           </div>
         </div>
 
@@ -93,13 +93,13 @@ export const AgentTraceView: React.FC = () => {
             }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700 }}>STAGE 0{st.num}</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>STAGE 0{st.num}</span>
                   {st.icon}
                 </div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.25rem' }}>
                   {st.name}
                 </div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
                   {st.desc}
                 </div>
               </div>
@@ -142,10 +142,10 @@ export const AgentTraceView: React.FC = () => {
                       {run.policy_outcome}
                     </span>
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--text-primary)', marginTop: '0.25rem' }}>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-main)', marginTop: '0.25rem' }}>
                     Action: {run.action}
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.35rem', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.35rem', fontSize: '0.72rem', color: 'var(--text-dim)' }}>
                     <span>Actor: {run.actor}</span>
                     <span>{new Date(run.timestamp).toLocaleTimeString()}</span>
                   </div>

@@ -28,23 +28,23 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ currentRole }) => {
   }, [currentRole]);
 
   if (loading) {
-    return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Loading system configuration...</div>;
+    return <div style={{ padding: '1.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>Loading platform configuration...</div>;
   }
 
   const isLocal = posture?.execution_mode === 'LOCAL_EMULATION';
 
   return (
     <div>
-      {/* IBM Z Hardware Architecture Card */}
-      <div className="card" style={{ marginBottom: '1.5rem' }}>
+      {/* IBM Z Architecture Card */}
+      <div className="card" style={{ marginBottom: '1.25rem' }}>
         <div className="card-header">
           <div>
             <div className="card-title">
-              <Cpu size={18} color="#8b5cf6" />
-              IBM Z / LinuxONE Platform Integration Architecture
+              <Cpu size={16} color="#a855f7" />
+              IBM Z / LinuxONE Platform Posture
             </div>
             <div className="card-desc">
-              Hardware-assisted security adapters, confidential computing isolation, and enterprise identity federation
+              Hardware cryptography adapters, confidential computing isolation, and enterprise identity
             </div>
           </div>
           <span className={`badge ${isLocal ? 'badge-purple' : 'badge-success'}`}>
@@ -52,98 +52,98 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ currentRole }) => {
           </span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '0.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.85rem', marginTop: '0.4rem' }}>
           
-          <div style={{ background: 'var(--bg-input)', padding: '1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-              <Key size={16} color="#00b4d8" />
-              <strong style={{ fontSize: '0.85rem' }}>CPACF Hardware Crypto</strong>
+          <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.35rem' }}>
+              <Key size={15} color="#00b4d8" />
+              <strong style={{ fontSize: '0.82rem' }}>CPACF Crypto</strong>
             </div>
-            <div style={{ fontSize: '0.8rem', color: isLocal ? '#c4b5fd' : '#34d399', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.78rem', color: isLocal ? '#c4b5fd' : '#34d399', fontWeight: 600 }}>
               Status: {posture?.cpacf_hardware_crypto.status}
             </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.2rem', lineHeight: 1.4 }}>
               Provider: {posture?.cpacf_hardware_crypto.provider}
             </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
               Acceleration: {posture?.cpacf_hardware_crypto.acceleration}
             </div>
           </div>
 
-          <div style={{ background: 'var(--bg-input)', padding: '1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-              <Lock size={16} color="#8b5cf6" />
-              <strong style={{ fontSize: '0.85rem' }}>Secure Execution Enclave</strong>
+          <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.35rem' }}>
+              <Lock size={15} color="#a855f7" />
+              <strong style={{ fontSize: '0.82rem' }}>Secure Execution Enclave</strong>
             </div>
-            <div style={{ fontSize: '0.8rem', color: isLocal ? '#c4b5fd' : '#34d399', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.78rem', color: isLocal ? '#c4b5fd' : '#34d399', fontWeight: 600 }}>
               Status: {posture?.secure_execution_enclave.status}
             </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.2rem', lineHeight: 1.4 }}>
               Tech: {posture?.secure_execution_enclave.technology}
             </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
               Memory Encryption: {posture?.secure_execution_enclave.memory_encryption ? 'Hardware Active' : 'Software Emulated'}
             </div>
           </div>
 
-          <div style={{ background: 'var(--bg-input)', padding: '1rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-              <Server size={16} color="#10b981" />
-              <strong style={{ fontSize: '0.85rem' }}>Enterprise RACF Identity</strong>
+          <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.35rem' }}>
+              <Server size={15} color="#10b981" />
+              <strong style={{ fontSize: '0.82rem' }}>Enterprise RACF Identity</strong>
             </div>
-            <div style={{ fontSize: '0.8rem', color: '#34d399', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.78rem', color: '#34d399', fontWeight: 600 }}>
               Status: {posture?.enterprise_identity_mapper.status}
             </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.2rem', lineHeight: 1.4 }}>
               Provider: {posture?.enterprise_identity_mapper.provider}
             </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+            <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
               Mode: {posture?.enterprise_identity_mapper.passthrough_mode}
             </div>
           </div>
 
         </div>
 
-        {/* Local vs Production Transparency Notice */}
-        <div style={{ marginTop: '1rem', padding: '0.85rem', background: 'rgba(139, 92, 246, 0.08)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(139, 92, 246, 0.25)', fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-          <strong style={{ color: '#c4b5fd' }}>Deployment Reality Distinction:</strong> When running on non-s390x hardware (x86_64 / ARM development laptops), SecureAgent AI transparently activates its local emulation adapter. Cryptographic operations and confidential computing primitives are fully functional via software emulation. Production deployment to an IBM z15/z16 or LinuxONE host automatically engages native CPACF hardware instructions (KM/KMC/KLMD) and Ultravisor guest memory protection.
+        {/* Local vs Production Notice */}
+        <div style={{ marginTop: '0.85rem', padding: '0.75rem', background: 'var(--status-ibm-bg)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--status-ibm-border)', fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+          <strong style={{ color: '#d8b4fe' }}>Environment distinction:</strong> On development workstations (x86_64 or ARM), SecureAgent AI runs with software emulation for cryptographic instructions and process sandboxing. On an s390x mainframe (z15, z16, or LinuxONE), the adapter engages native CPACF instructions (`KM`, `KMC`, `KLMD`) and Ultravisor guest memory encryption.
         </div>
       </div>
 
-      {/* Synthetic Enterprise Records Explorer */}
+      {/* Synthetic Enterprise Records */}
       <div className="card">
         <div className="card-header">
           <div>
             <div className="card-title">
-              <Database size={18} color="#0f62fe" />
-              Synthetic Enterprise Database (Access Gated by Active Role: {currentRole.toUpperCase()})
+              <Database size={16} color="#3b82f6" />
+              Synthetic Records (Filtered for Role: {currentRole})
             </div>
             <div className="card-desc">
-              Demonstrates row and field-level security boundaries applied before data leaves database layer:
+              Demonstrates row and field-level permissions applied at database query time:
             </div>
           </div>
-          <span className="badge badge-info">{records.length} Synthetic Records</span>
+          <span className="badge badge-info">{records.length} records</span>
         </div>
 
         <div className="table-wrapper">
           <table className="data-table">
             <thead>
               <tr>
-                <th>Record ID</th>
-                <th>Customer Name</th>
+                <th>ID</th>
+                <th>Customer</th>
                 <th>Account #</th>
-                <th>Classification</th>
+                <th>Level</th>
                 <th>SSN Masked</th>
                 <th>Balance</th>
-                <th>Department</th>
+                <th>Dept</th>
                 <th>Internal Notes</th>
               </tr>
             </thead>
             <tbody>
               {records.map(rec => (
                 <tr key={rec.id}>
-                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#60a5fa' }}>{rec.id}</td>
-                  <td style={{ fontWeight: 600 }}>{rec.customer_name}</td>
+                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 500, color: '#60a5fa' }}>{rec.id}</td>
+                  <td style={{ fontWeight: 500 }}>{rec.customer_name}</td>
                   <td style={{ fontFamily: 'var(--font-mono)' }}>{rec.account_number}</td>
                   <td>
                     <span className={`badge ${rec.classification === 'RESTRICTED' ? 'badge-danger' : (rec.classification === 'CONFIDENTIAL' ? 'badge-warning' : 'badge-info')}`}>
@@ -155,7 +155,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ currentRole }) => {
                     ${Number(rec.balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                   </td>
                   <td>{rec.department}</td>
-                  <td style={{ fontSize: '0.78rem', color: rec.notes.includes('HIDDEN') ? '#f87171' : 'var(--text-secondary)' }}>
+                  <td style={{ fontSize: '0.74rem', color: rec.notes.includes('HIDDEN') ? '#f87171' : 'var(--text-muted)' }}>
                     {rec.notes}
                   </td>
                 </tr>

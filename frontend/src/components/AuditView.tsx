@@ -42,7 +42,7 @@ export const AuditView: React.FC = () => {
   }, []);
 
   if (loading && logs.length === 0) {
-    return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Loading tamper-evident audit ledger...</div>;
+    return <div style={{ padding: '1.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>Loading audit entries...</div>;
   }
 
   const filteredLogs = logs.filter(l =>
@@ -54,16 +54,16 @@ export const AuditView: React.FC = () => {
 
   return (
     <div>
-      {/* Integrity Verification Header Card */}
-      <div className="card" style={{ marginBottom: '1.5rem' }}>
-        <div className="card-header" style={{ marginBottom: '0.65rem' }}>
+      {/* Verification Card */}
+      <div className="card" style={{ marginBottom: '1.25rem' }}>
+        <div className="card-header" style={{ marginBottom: '0.5rem' }}>
           <div>
             <div className="card-title">
-              <Lock size={18} color="#10b981" />
-              Tamper-Evident SHA-256 Audit Trail
+              <Lock size={16} color="#10b981" />
+              Audit Integrity Check
             </div>
             <div className="card-desc">
-              Every gateway event is cryptographically linked to the previous entry hash: Hash_n = SHA256(Hash_n-1 || Details)
+              Events are linked with SHA-256 hashes: Hash_n = SHA256(Hash_n-1 || Entry)
             </div>
           </div>
 
@@ -72,44 +72,44 @@ export const AuditView: React.FC = () => {
             onClick={handleVerify}
             disabled={verifying}
           >
-            <RefreshCw size={14} className={verifying ? 'spin' : ''} />
-            {verifying ? 'Recomputing Hashes...' : 'Verify Cryptographic Integrity'}
+            <RefreshCw size={13} className={verifying ? 'spin' : ''} />
+            {verifying ? 'Verifying...' : 'Verify Hash Chain'}
           </button>
         </div>
 
         {report && (
           <div style={{
-            background: report.is_valid ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)',
-            border: `1px solid ${report.is_valid ? 'rgba(16, 185, 129, 0.25)' : 'rgba(239, 68, 68, 0.25)'}`,
+            background: report.is_valid ? 'var(--status-pass-bg)' : 'var(--status-fail-bg)',
+            border: `1px solid ${report.is_valid ? 'var(--status-pass-border)' : 'var(--status-fail-border)'}`,
             borderRadius: 'var(--radius-sm)',
-            padding: '0.85rem 1rem',
+            padding: '0.75rem 0.85rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            gap: '0.75rem'
+            gap: '0.65rem'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
               {report.is_valid ? (
-                <CheckCircle2 size={20} color="#10b981" />
+                <CheckCircle2 size={18} color="#10b981" />
               ) : (
-                <ShieldAlert size={20} color="#ef4444" />
+                <ShieldAlert size={18} color="#ef4444" />
               )}
               <div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: report.is_valid ? '#34d399' : '#f87171' }}>
-                  {report.is_valid ? 'Cryptographic Hash Chain Intact & Valid' : 'Ledger Tampering Detected!'}
+                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: report.is_valid ? '#34d399' : '#f87171' }}>
+                  {report.is_valid ? 'Hash chain verified' : 'Integrity check failed'}
                 </div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
                   {report.verification_message}
                 </div>
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <span className="badge badge-info">{report.total_records} Verified Records</span>
+            <div style={{ display: 'flex', gap: '0.45rem', alignItems: 'center' }}>
+              <span className="badge badge-info">{report.total_records} records</span>
               {report.latest_hash && (
                 <span className="badge badge-purple" style={{ fontFamily: 'var(--font-mono)' }}>
-                  Head: {report.latest_hash.substring(0, 12)}...
+                  {report.latest_hash.substring(0, 12)}...
                 </span>
               )}
             </div>
@@ -118,24 +118,24 @@ export const AuditView: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', gap: '1rem' }}>
-        <div style={{ position: 'relative', flex: 1, maxWidth: 400 }}>
-          <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', left: 10, top: 11 }} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem', gap: '0.85rem' }}>
+        <div style={{ position: 'relative', flex: 1, maxWidth: 360 }}>
+          <Search size={14} color="var(--text-dim)" style={{ position: 'absolute', left: 10, top: 10 }} />
           <input
             type="text"
             className="form-input"
-            style={{ paddingLeft: '2.2rem' }}
-            placeholder="Search by Request ID, Actor, Action, or Outcome..."
+            style={{ paddingLeft: '2rem', fontSize: '0.8rem' }}
+            placeholder="Filter by Request ID, Actor, or Action..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
         </div>
         <button className="btn btn-secondary btn-sm" onClick={fetchLogs}>
-          <RefreshCw size={14} /> Refresh Logs
+          <RefreshCw size={13} /> Refresh
         </button>
       </div>
 
-      {/* Audit Log Table */}
+      {/* Log Table */}
       <div className="card">
         <div className="table-wrapper">
           <table className="data-table">
@@ -143,21 +143,21 @@ export const AuditView: React.FC = () => {
               <tr>
                 <th>ID</th>
                 <th>Request ID</th>
-                <th>Timestamp</th>
+                <th>Time</th>
                 <th>Actor</th>
                 <th>Action</th>
                 <th>Risk</th>
                 <th>Outcome</th>
-                <th>Chained Hash (SHA-256)</th>
-                <th>Action</th>
+                <th>Hash</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {filteredLogs.map(log => (
                 <tr key={log.id}>
-                  <td style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>#{log.id}</td>
-                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#60a5fa' }}>{log.request_id}</td>
-                  <td style={{ fontSize: '0.78rem' }}>{new Date(log.timestamp).toLocaleTimeString()}</td>
+                  <td style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-dim)' }}>#{log.id}</td>
+                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 500, color: '#60a5fa' }}>{log.request_id}</td>
+                  <td style={{ fontSize: '0.74rem' }}>{new Date(log.timestamp).toLocaleTimeString()}</td>
                   <td>{log.actor}</td>
                   <td style={{ fontFamily: 'var(--font-mono)' }}>{log.action}</td>
                   <td>
@@ -170,16 +170,16 @@ export const AuditView: React.FC = () => {
                       {log.policy_outcome}
                     </span>
                   </td>
-                  <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#c4b5fd' }}>
-                    {log.entry_hash.substring(0, 16)}...
+                  <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#c4b5fd' }}>
+                    {log.entry_hash.substring(0, 14)}...
                   </td>
                   <td>
                     <button
                       className="btn btn-secondary btn-sm"
-                      style={{ fontSize: '0.72rem', padding: '0.2rem 0.5rem' }}
+                      style={{ fontSize: '0.7rem', padding: '0.15rem 0.45rem' }}
                       onClick={() => setSelectedRecord(log)}
                     >
-                      Inspect
+                      View
                     </button>
                   </td>
                 </tr>
@@ -189,26 +189,26 @@ export const AuditView: React.FC = () => {
         </div>
       </div>
 
-      {/* Selected Audit Record Detail Drawer */}
+      {/* Selected Detail Drawer */}
       {selectedRecord && (
         <div style={{
           position: 'fixed',
           top: 0,
           right: 0,
           bottom: 0,
-          width: 500,
+          width: 460,
           background: 'var(--bg-card)',
           borderLeft: '1px solid var(--border-subtle)',
-          boxShadow: 'var(--shadow-md)',
-          padding: '1.5rem',
+          boxShadow: '0 0 24px rgba(0,0,0,0.5)',
+          padding: '1.25rem',
           zIndex: 50,
           overflowY: 'auto',
           display: 'flex',
           flexDirection: 'column',
-          gap: '1rem'
+          gap: '0.85rem'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.75rem' }}>
-            <div style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.65rem' }}>
+            <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)' }}>
               Audit Record #{selectedRecord.id}
             </div>
             <button className="btn btn-secondary btn-sm" onClick={() => setSelectedRecord(null)}>
@@ -217,39 +217,39 @@ export const AuditView: React.FC = () => {
           </div>
 
           <div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>REQUEST IDENTIFIER</div>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Request ID</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#60a5fa' }}>{selectedRecord.request_id}</div>
           </div>
 
           <div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>TIMESTAMP</div>
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>{selectedRecord.timestamp}</div>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Timestamp</div>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-main)' }}>{selectedRecord.timestamp}</div>
           </div>
 
           <div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>POLICY DECISION</div>
-            <span className={`badge ${selectedRecord.policy_outcome === 'ALLOWED' ? 'badge-success' : 'badge-danger'}`}>
-              {selectedRecord.policy_outcome} (Risk: {selectedRecord.risk_level})
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Policy Outcome</div>
+            <span className={`badge ${selectedRecord.policy_outcome === 'ALLOWED' ? 'badge-success' : 'badge-danger'}`} style={{ marginTop: '0.2rem' }}>
+              {selectedRecord.policy_outcome} (risk: {selectedRecord.risk_level})
             </span>
           </div>
 
           <div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>SANITIZED DETAILS (NO RAW SECRETS)</div>
-            <div className="code-block" style={{ maxHeight: 220, overflowY: 'auto' }}>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Sanitized Details</div>
+            <div className="code-block" style={{ maxHeight: 200, overflowY: 'auto' }}>
               {JSON.stringify(selectedRecord.details, null, 2)}
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>PREVIOUS HASH DIGEST</div>
-            <div className="code-block" style={{ fontSize: '0.72rem', color: 'var(--text-muted)', wordBreak: 'break-all' }}>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Previous Hash</div>
+            <div className="code-block" style={{ fontSize: '0.7rem', color: 'var(--text-dim)', wordBreak: 'break-all' }}>
               {selectedRecord.previous_hash}
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>ENTRY HASH DIGEST (SHA-256)</div>
-            <div className="code-block" style={{ fontSize: '0.72rem', color: '#c4b5fd', wordBreak: 'break-all' }}>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Entry Hash (SHA-256)</div>
+            <div className="code-block" style={{ fontSize: '0.7rem', color: '#c4b5fd', wordBreak: 'break-all' }}>
               {selectedRecord.entry_hash}
             </div>
           </div>

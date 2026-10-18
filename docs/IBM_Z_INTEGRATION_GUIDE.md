@@ -92,8 +92,8 @@ sudo dnf install -y python311 python311-devel openssl-devel gcc
 
 ### Step 3: Clone & Install SecureAgent AI
 ```bash
-git clone https://github.com/example/secureagent-ai.git
-cd secureagent-ai
+git clone https://github.com/vijaymahes9080/IBM_datathon_project.git
+cd IBM_datathon_project
 python3.11 -m venv venv
 source venv/bin/activate
 pip install -r backend/requirements.txt
