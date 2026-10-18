@@ -4,6 +4,16 @@ Security gateway and deterministic policy perimeter for enterprise AI workloads 
 
 ---
 
+### 🎥 Demonstration Video (160s, 1080p Full HD)
+- **Video File**: [`secureagent_ai_demo.mp4`](secureagent_ai_demo.mp4) (also in [`demo_video/secureagent_ai_realistic_demo.mp4`](demo_video/secureagent_ai_realistic_demo.mp4))
+- **Video Documentation**: [`demo_video/README.md`](demo_video/README.md) | [Storyboard](demo_video/storyboard.md) | [Narration Script](demo_video/narration_script.md)
+- **Live Public Tunnel**: [https://dirty-ravens-fall.loca.lt](https://dirty-ravens-fall.loca.lt) (Password/IP: `157.50.3.136`)
+- **Format**: MP4 (H.264 / AAC, 1920x1080 @ 30 fps), **160.2 seconds** ($\le 180$ seconds)
+- **Real Demonstration**: Full live browser capture of active application with natural cursor movement, real live prompt execution, role-based authorization blocks, human approval workflow, 16 live security benchmarks, and cryptographic SHA-256 hash chain verification.
+
+
+---
+
 ## The Problem
 
 Most AI security tools try to make the model police itself through system prompts, guardrail completions, or output classifiers. This fails in practice: any prompt can be subverted by a clever instruction override, and models cannot reliably enforce access control over their own tools.

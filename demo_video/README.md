@@ -1,11 +1,12 @@
 # SecureAgent AI — Video Demonstration Deliverables
 
 **Submission**: IBM Z Datathon 2026 — *“AI Secured: Innovation Without Exposure”*  
-**Deliverable File**: [`SecureAgent_AI_Demo.mp4`](SecureAgent_AI_Demo.mp4)  
+**Deliverable File**: [`secureagent_ai_realistic_demo.mp4`](secureagent_ai_realistic_demo.mp4) (also copied to [`secureagent_ai_demo.mp4`](../secureagent_ai_demo.mp4))  
 **Format**: MP4 (H.264 / AAC)  
 **Resolution**: 1920x1080 (Full HD, 1080p @ 30 fps)  
-**Duration**: 172.04 Seconds (2m 52s) — Strictly compliant with $\le 180$ seconds constraint  
-**Audio**: High-clarity English neural narration (`en-US-ChristopherNeural`) with burned & synchronized subtitles  
+**Duration**: 160.21 Seconds (2m 40s) — Strictly compliant with $\le 180$ seconds constraint  
+**Audio**: High-clarity English neural narration (`en-US-ChristopherNeural`) with synchronized, beautifully styled burned subtitles  
+**Production Technique**: Authentic live browser screen recordings via Playwright with realistic cursor trajectory, live input execution, and zero AI watermarks/labels.
 
 ---
 
@@ -13,31 +14,32 @@
 
 ```
 demo_video/
-├── SecureAgent_AI_Demo.mp4      # Master 1080p 30fps video (< 180s, submission-ready)
-├── narration_script.md          # Full transcript with timestamp markers and word counts
-├── subtitles.srt                # Accurate synchronized subtitle file
-├── storyboard.md                # Comprehensive scene-by-scene storyboard
-├── thumbnail.png                # 1920x1080 video thumbnail
-├── generate_audio.py            # Audio narration synthesis script
-├── generate_graphics.py         # 1080p graphic slide generator
-├── annotate_screens.py          # Screen capture annotation script
-├── assemble_video.py            # Master FFmpeg assembly and subtitling script
-├── audio/                       # Individual scene WAV and MP3 clips
-├── graphics/                    # 1080p title and architecture diagram slides
-├── raw_captures/                # Original live application 1080p screenshots
-└── clips/                       # Segment video and audio renders
+├── secureagent_ai_realistic_demo.mp4 # Master 1080p 30fps realistic video (< 180s, live screen capture)
+├── narration_script.md               # Full transcript with timestamp markers and word counts
+├── subtitles.srt                     # Accurate synchronized subtitle file
+├── storyboard.md                     # Comprehensive scene-by-scene storyboard
+├── thumbnail.png                     # 1920x1080 video thumbnail
+├── record_all_scenes.py              # Automated live browser screen recorder (Playwright + Edge)
+├── assemble_realistic_video.py       # Master FFmpeg assembly and subtitle burning script
+├── live_recordings/                  # Captured high-fps webm browser sessions
+│   ├── rec_overview/                 # Scene 2 Overview console walkthrough
+│   ├── rec_demo/                     # Scene 3 AI Workspace, Policy, Eval Lab & Audit Log
+│   └── rec_platform/                 # Scene 4 IBM Z Platform & CPACF view
+├── audio/                            # Neural narration WAV clips (scenes 1-4)
+├── graphics/                         # 1080p title and architecture diagram slides
+└── output/                           # Final production MP4 renders
 ```
 
 ---
 
 ## 2. Storyboard & Scene Summary
 
-| Scene | Duration | Timing | Focus & Content |
+| Scene | Duration | Timing | Visual & Demonstrative Content |
 | :--- | :--- | :--- | :--- |
-| **Scene 1: The Problem** | 31.0s | 0:00 – 0:31 | Title card & enterprise vulnerability gap: why LLMs cannot safely self-police internal access. |
-| **Scene 2: Architecture** | 41.0s | 0:31 – 1:12 | 6-stage outer security boundary: Ingress $\to$ Presidio Redactor $\to$ Threat Scanner $\to$ RBAC $\to$ Safe Tools/HITL $\to$ SHA-256 Ledger. Cuts to live Overview console. |
-| **Scene 3: Live Security Demonstration** | 58.0s | 1:12 – 2:10 | Genuine screen captures from running application: <br>• Preset A: PII scrubbing & payload isolation (`<US_SSN>`, `<CREDIT_CARD>`)<br>• Preset C: Prompt injection blocked (threat score 1.00)<br>• Preset D: Viewer role denied customer lookup<br>• Preset F: Restricted export halted for administrator sign-off<br>• Approvals Console: Administrator approves ticket<br>• Evaluation Suite: 16 live benchmarks executed<br>• Audit View: Unbroken SHA-256 hash chain verified mathematically |
-| **Scene 4: IBM Z & Impact** | 42.0s | 2:10 – 2:52 | Linux on IBM Z / LinuxONE deployment path: CPACF hardware crypto (`KM`/`KMC`), IBM Secure Execution Ultravisor memory isolation, and RACF identity mapping. Closes on submission outro. |
+| **Scene 1: The Problem** | 29.35s | 0:00 – 0:29 | Opening title card & enterprise vulnerability diagram: why large language models cannot reliably police themselves when confidential customer data enters prompt context. |
+| **Scene 2: Architecture & Overview** | 39.31s | 0:29 – 1:08 | 6-stage outer security boundary diagram (Presidio Redactor $\to$ Threat Scanner $\to$ RBAC $\to$ Safe Tools/HITL $\to$ SHA-256 Ledger), transitioning to a **live screen recording** of the Overview Dashboard highlighting live security metrics and active rules. |
+| **Scene 3: Live Security Demonstration** | 55.39s | 1:08 – 2:04 | **Authentic continuous live screen recording** of the active web application:<br>• Preset 1: PII scrubbing & payload comparison (`<US_SSN>`, `<CREDIT_CARD>`)<br>• Preset 2: Adversarial prompt injection blocked immediately (threat score 1.00)<br>• Preset 3: Role switched to Viewer $\to$ server-side RBAC denies record lookup<br>• Preset 4: Role switched to Admin $\to$ Restricted export halted for Human-in-the-Loop review<br>• Policy View: Administrator approves the pending ticket live<br>• Evaluation Suite: Live execution of 16 security benchmarks with 100% pass score<br>• Audit Log: Live verification of cryptographic SHA-256 hash chain integrity |
+| **Scene 4: IBM Z & Enterprise Impact** | 36.12s | 2:04 – 2:40 | **Live screen recording** of Platform & IBM Z settings view showing CPACF crypto status and Secure Execution enclave isolation, followed by IBM Z architecture blueprint and submission outro card. |
 
 ---
 
@@ -46,23 +48,12 @@ demo_video/
 You can verify the video resolution, duration, and codecs using the bundled FFprobe/FFmpeg:
 
 ```bash
-# Verify video duration and streams
-..\venv\Scripts\python -c "import imageio_ffmpeg, subprocess; print(subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), '-i', 'SecureAgent_AI_Demo.mp4'], stderr=subprocess.PIPE, text=True).stderr)"
+..\venv\Scripts\python -c "import imageio_ffmpeg, subprocess; print(subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), '-i', 'secureagent_ai_realistic_demo.mp4'], stderr=subprocess.PIPE, text=True).stderr)"
 ```
 
 ### Verified Stream Attributes:
-- **Duration**: `00:02:52.04` (172.04 seconds)
+- **Duration**: `00:02:40.21` (160.21 seconds)
 - **Video Stream**: H.264 (High Profile, `yuv420p`), $1920 \times 1080$, 30 fps, Progressive
-- **Audio Stream**: AAC-LC, 24,000 Hz, Mono, 95 kbps
-- **Container**: MP4 (`isom` / `mp41` / `avc1`) with `faststart` enabled for instant streaming
-
----
-
-## 4. Manual Upload & Presentation Instructions
-
-1. **Submission Portal**: Upload [`SecureAgent_AI_Demo.mp4`](SecureAgent_AI_Demo.mp4) directly to the Datathon review portal or attach via GitHub release.
-2. **YouTube / Vimeo (if required)**:
-   - Title: `SecureAgent AI — AI Secured: Innovation Without Exposure (IBM Z Datathon 2026)`
-   - Description: Include link to repository [https://github.com/vijaymahes9080/IBM_datathon_project](https://github.com/vijaymahes9080/IBM_datathon_project)
-   - Closed Captions: Upload [`subtitles.srt`](subtitles.srt) for optional native player captions.
-   - Thumbnail: Use [`thumbnail.png`](thumbnail.png).
+- **Audio Stream**: AAC-LC, 44,100 Hz, Stereo, 192 kbps
+- **Subtitles**: Burned in with Segoe UI font, readable dark stroke, optimal bottom margin
+- **Container**: MP4 (`isom` / `mp41` / `avc1`)

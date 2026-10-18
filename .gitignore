@@ -58,5 +58,8 @@ Thumbs.db
 
 # Demo Video Render Cache
 demo_video/clips/
+demo_video/live_recordings/
+demo_video/test_recordings/
+demo_video/output/
 demo_video/audio/*.wav
 
