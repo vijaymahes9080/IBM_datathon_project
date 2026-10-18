@@ -60,42 +60,43 @@ flowchart TD
 
 ---
 
-## Local Setup (No GPU or External API Required)
+---
 
-The application runs entirely offline on a standard laptop. The default mode uses a local deterministic reasoning engine, so you do not need an Ollama daemon, paid API keys, or an active internet connection.
+## Running & Hosting Options
 
-### Requirements
-- Python 3.11 or newer
-- Node.js 18 or newer (with npm)
-- Git
-
-### 1. Backend Setup
+### Option 1: Unified Single-Port Hosting (Recommended)
+FastAPI directly serves the production-compiled React client and all security APIs from a single port (`8000`), requiring zero CORS configurations and no separate terminal:
 
 ```bash
-# Create and activate virtual environment
-python -m venv venv
+# Windows
+start_production.bat
 
-# Windows:
-.\venv\Scripts\activate
-# Linux / macOS:
-source venv/bin/activate
-
-# Install dependencies and lightweight English language model
-pip install -r backend/requirements.txt
-python -m spacy download en_core_web_sm
-
-# Start FastAPI server
-cd backend
-python -m uvicorn app.main:app --port 8000 --host 127.0.0.1
+# Linux / s390x
+chmod +x start_production.sh
+./start_production.sh
 ```
 
-The API starts at `http://127.0.0.1:8000`. Interactive OpenAPI documentation is available at `http://127.0.0.1:8000/docs`.
+Open `http://localhost:8000/` in any browser.
 
-### 2. Frontend Setup (Separate Terminal)
+### Option 2: Docker Container (Zero Host Dependencies)
+Build and run the multi-stage container packaging both frontend and backend:
 
 ```bash
+docker compose up --build
+```
+
+The container starts with an unprivileged service user (`appuser:10001`) and exposes the unified application at `http://localhost:8000/`.
+
+### Option 3: Separate Development Mode
+For live hot-reloading during development:
+
+```bash
+# Terminal 1: Backend API
+cd backend
+python -m uvicorn app.main:app --port 8000 --reload
+
+# Terminal 2: Frontend Vite
 cd frontend
-npm install
 npm run dev
 ```
 

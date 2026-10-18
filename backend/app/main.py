@@ -1,8 +1,11 @@
+import os
 import json
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional
 from fastapi import FastAPI, HTTPException, Request, Query, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from .config import settings
@@ -285,3 +288,42 @@ def list_synthetic_records(role: str = Query("analyst")):
             data["balance"] = 0.0
         records.append(data)
     return records
+
+
+# -----------------------------------------------------------------------------
+# Unified Hosting: Mount Frontend Static Files & SPA Route
+# -----------------------------------------------------------------------------
+FRONTEND_DIST_DIRS = [
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dist")),
+    os.path.abspath(os.path.join(os.getcwd(), "frontend", "dist")),
+    os.path.abspath(os.path.join(os.getcwd(), "dist")),
+]
+
+frontend_dist = None
+for candidate in FRONTEND_DIST_DIRS:
+    if os.path.exists(candidate) and os.path.isdir(candidate):
+        frontend_dist = candidate
+        break
+
+if frontend_dist:
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa_frontend(full_path: str):
+        # Exclude API and documentation routes from SPA interception
+        if full_path.startswith("api") or full_path in ["docs", "redoc", "openapi.json"]:
+            raise HTTPException(status_code=404, detail="Not Found")
+
+        requested_file = os.path.join(frontend_dist, full_path)
+        if os.path.isfile(requested_file):
+            return FileResponse(requested_file)
+
+        index_file = os.path.join(frontend_dist, "index.html")
+        if os.path.exists(index_file):
+            return FileResponse(index_file)
+
+        raise HTTPException(status_code=404, detail="Frontend index.html not found")
+
