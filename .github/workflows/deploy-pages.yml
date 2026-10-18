@@ -38,6 +38,10 @@ jobs:
           cd frontend
           npm run build
 
+      - name: Copy demo video to distribution
+        run: |
+          cp secureagent_ai_demo.mp4 frontend/dist/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
